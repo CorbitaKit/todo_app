@@ -6,6 +6,7 @@ export default defineConfig({
     plugins: [
         laravel({
             input: ['resources/js/app.js'],
+            
             refresh: true,
         }),
         vue({
@@ -17,4 +18,8 @@ export default defineConfig({
             },
         }),
     ],
+    resolve: name => {
+        const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
+        return pages[`./Pages/${name}.vue`]
+      },
 });

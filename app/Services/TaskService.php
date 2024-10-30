@@ -7,6 +7,7 @@ use App\Interfaces\TaskInterface;
 use App\Repository\TaskRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class TaskService implements TaskInterface
 {
@@ -32,7 +33,7 @@ class TaskService implements TaskInterface
         return $this->repo->show($id);
     }
 
-    public function update(TaskRequest $request, int $id): Model
+    public function update(Request $request, int $id): Model
     {
         return $this->repo->update($request->all(), $id);
     }
