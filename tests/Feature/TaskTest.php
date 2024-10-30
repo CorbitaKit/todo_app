@@ -27,7 +27,7 @@ class TaskTest extends TestCase
      * response contains the expected number of tasks and that each task object
      * includes the required attributes: 'id', 'description', 'status', and 'title'.
      */
-    public function test_for_fetching_task_lists(): void
+    public function test_fetch_tasks_list(): void
     {
         Task::factory($this->tasksNum)->create();
 
@@ -80,6 +80,29 @@ class TaskTest extends TestCase
     }
 
     /**
+     * Test fetching a single task by its ID.
+     *
+     * This test verifies that the API endpoint for retrieving a specific task
+     * returns a successful response (HTTP status 200) and that the response
+     * contains the expected JSON structure, including the task's 'id', 'title',
+     * 'description', and 'status'.
+     */
+    public function test_fetch_task()
+    {
+        $task = Task::factory()->create();
+
+        $response = $this->getJson(route('tasks.show', $task->id))
+            ->assertStatus(200);
+
+        $response->assertJsonStructure([
+            'id',
+            'title',
+            'description',
+            'status'
+        ]);
+    }
+
+    /**
      * Process a test request to filter tasks by their status.
      *
      * This method creates a specified number of task instances with the given status,
@@ -105,5 +128,17 @@ class TaskTest extends TestCase
         foreach ($tasks as $task) {
             $this->assertEquals($status, $task['status']);
         }
+    }
+
+    public function test_delete_task()
+    {
+        $task = Task::factory()->create();
+
+        $this->deleteJson(route('tasks.destroy', $task->id))
+            ->assertStatus(204);
+
+        $this->assertDatabaseMissing('tasks', [
+            'id' => $task->id
+        ]);
     }
 }

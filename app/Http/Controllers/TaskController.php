@@ -20,6 +20,20 @@ class TaskController extends Controller
         return response(json_encode($tasks), 200);
     }
 
+    public function show(int $id)
+    {
+        $task = $this->service->show($id);
+
+        return response(json_encode($task), 200);
+    }
+
+    public function destroy(int $id)
+    {
+        $this->service->delete($id);
+
+        return response(json_encode('Deleted Successfully!'), 204);
+    }
+
     public function filter(string $status)
     {
         $tasks = $this->service->filter($status);
