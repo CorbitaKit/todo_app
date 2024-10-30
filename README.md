@@ -12,7 +12,7 @@ git clone https://github.com/CorbitaKit/todo_app.git
 ### 2. Navigate to the project directory
 
 Change to the project directory:
-cd todo_app
+cd todo_app and type git checkout master
 
 ### 3. Set up the environment file
 
