@@ -34,7 +34,7 @@ class TaskService implements TaskInterface
 
     public function update(TaskRequest $request, int $id): Model
     {
-        return $this->repo->update($request->all, $id);
+        return $this->repo->update($request->all(), $id);
     }
 
     public function delete(int $id): bool

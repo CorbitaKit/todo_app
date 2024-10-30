@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskRequest;
 use App\Interfaces\TaskInterface;
 
 class TaskController extends Controller
@@ -25,6 +26,20 @@ class TaskController extends Controller
         $task = $this->service->show($id);
 
         return response(json_encode($task), 200);
+    }
+
+    public function store(TaskRequest $request)
+    {
+        $this->service->create($request);
+
+        return response(json_encode('Created!'), 201);
+    }
+
+    public function update(TaskRequest $request, int $id)
+    {
+        $this->service->update($request, $id);
+
+        return response(json_encode("Updated!"), 200);
     }
 
     public function destroy(int $id)
